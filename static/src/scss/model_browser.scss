@@ -1,0 +1,233 @@
+// Model Browser - "All Functions" style component
+
+.model-browser-container {
+    position: relative;
+}
+
+.model-browser-trigger {
+    color: #495057;
+    font-size: 1.1rem;
+    padding: 0.25rem 0.5rem;
+    transition: color 0.15s ease;
+    
+    &:hover {
+        color: #017e84;
+    }
+}
+
+.model-browser-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+    backdrop-filter: blur(2px);
+}
+
+.model-browser-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    max-width: 90vw;
+    max-height: 80vh;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    z-index: 1051;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: modelBrowserSlideIn 0.2s ease;
+}
+
+@keyframes modelBrowserSlideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -48%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.model-browser-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #e9ecef;
+    background: linear-gradient(135deg, #017e84 0%, #015f64 100%);
+    color: white;
+}
+
+.model-browser-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.model-browser-close {
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+    
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.model-browser-search {
+    position: relative;
+    padding: 1rem 1.25rem;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.model-browser-search-icon {
+    position: absolute;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+}
+
+.model-browser-search-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    font-size: 1rem;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    
+    &:focus {
+        border-color: #017e84;
+        box-shadow: 0 0 0 3px rgba(1, 126, 132, 0.15);
+    }
+    
+    &::placeholder {
+        color: #adb5bd;
+    }
+}
+
+.model-browser-shortcut {
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    color: #6c757d;
+    background: #e9ecef;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+.model-browser-list {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 400px;
+    
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 4px;
+        
+        &:hover {
+            background: #a1a1a1;
+        }
+    }
+}
+
+.model-browser-loading,
+.model-browser-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    color: #6c757d;
+}
+
+.model-browser-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f3f5;
+    transition: background-color 0.1s ease;
+    
+    &:hover,
+    &.selected {
+        background: #f0f9fa;
+    }
+    
+    &.selected {
+        border-left: 3px solid #017e84;
+        padding-left: calc(1.25rem - 3px);
+    }
+    
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.model-browser-item-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.model-browser-item-name {
+    font-weight: 500;
+    color: #212529;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.model-browser-item-model {
+    font-size: 0.8rem;
+    color: #6c757d;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.model-browser-item-count {
+    margin-left: 1rem;
+    
+    .badge {
+        font-weight: 500;
+        font-size: 0.75rem;
+    }
+}
+
+.model-browser-footer {
+    padding: 0.75rem 1.25rem;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    font-size: 0.8rem;
+    
+    kbd {
+        background: #212529;
+        color: white;
+        padding: 0.15rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.7rem;
+    }
+}
+

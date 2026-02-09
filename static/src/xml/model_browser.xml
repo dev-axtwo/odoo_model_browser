@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="model_browser.ModelBrowser">
+        <div class="model-browser-container">
+            <!-- Trigger button in systray -->
+            <button class="model-browser-trigger btn btn-link" 
+                    t-on-click="toggleBrowser"
+                    title="Model Browser (Alt+M)">
+                <i class="fa fa-database"/>
+            </button>
+
+            <!-- Modal overlay -->
+            <t t-if="state.isOpen">
+                <div class="model-browser-overlay" t-on-click="closeBrowser"/>
+                <div class="model-browser-modal">
+                    <div class="model-browser-header">
+                        <div class="model-browser-title">
+                            <i class="fa fa-database me-2"/>
+                            Model Browser
+                        </div>
+                        <button class="model-browser-close btn-close" t-on-click="closeBrowser"/>
+                    </div>
+                    
+                    <div class="model-browser-search">
+                        <i class="fa fa-search model-browser-search-icon"/>
+                        <input 
+                            t-ref="searchInput"
+                            type="text"
+                            class="model-browser-search-input"
+                            placeholder="Search models... (name or technical name)"
+                            t-att-value="state.searchTerm"
+                            t-on-input="onSearchInput"
+                            t-on-keydown="onSearchKeydown"
+                        />
+                        <span class="model-browser-shortcut">Alt+M</span>
+                    </div>
+                    
+                    <div class="model-browser-list">
+                        <t t-if="state.loading">
+                            <div class="model-browser-loading">
+                                <i class="fa fa-spinner fa-spin"/> Loading...
+                            </div>
+                        </t>
+                        <t t-elif="state.models.length === 0">
+                            <div class="model-browser-empty">
+                                <i class="fa fa-inbox fa-2x mb-2"/>
+                                <div>No models found</div>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <t t-foreach="state.models" t-as="model" t-key="model.id">
+                                <div 
+                                    t-attf-class="model-browser-item {{ model_index === state.selectedIndex ? 'selected' : '' }}"
+                                    t-on-click="() => this.openModel(model)"
+                                    t-on-mouseenter="() => this.state.selectedIndex = model_index"
+                                >
+                                    <div class="model-browser-item-main">
+                                        <div class="model-browser-item-name" t-esc="model.name"/>
+                                        <div class="model-browser-item-model" t-esc="model.model"/>
+                                    </div>
+                                    <div class="model-browser-item-count">
+                                        <span class="badge bg-secondary" t-esc="formatCount(model.count)"/>
+                                    </div>
+                                </div>
+                            </t>
+                        </t>
+                    </div>
+                    
+                    <div class="model-browser-footer">
+                        <span class="text-muted">
+                            <kbd>↑↓</kbd> Navigate
+                            <kbd class="ms-2">Enter</kbd> Open
+                            <kbd class="ms-2">Esc</kbd> Close
+                        </span>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>
+
